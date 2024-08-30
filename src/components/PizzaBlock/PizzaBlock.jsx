@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PizzaBlock({
+export const PizzaBlock=({
   title,
   price,
   imageUrl,
@@ -9,7 +9,7 @@ export default function PizzaBlock({
   category,
   rating,
   id,
-}) {
+}) =>{
   const [pizzaCount, setPizzaCount] = React.useState(0);
   const typeNames = ["тонкое", "традиционное"];
 
@@ -73,3 +73,5 @@ export default function PizzaBlock({
     </div>
   );
 }
+
+export default PizzaBlock;

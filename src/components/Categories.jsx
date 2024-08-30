@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Categories(params) {
+export const Categories = (params) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые"];
@@ -20,4 +20,6 @@ export default function Categories(params) {
       </ul>
     </div>
   );
-}
+};
+
+export default Categories;

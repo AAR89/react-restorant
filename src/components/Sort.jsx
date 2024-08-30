@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Sort() {
+export const Sort = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const list = ["популярности", "цене", "алфавиту"];
   const [selected, setSelected] = React.useState(0);
@@ -46,4 +46,6 @@ export default function Sort() {
       )}
     </div>
   );
-}
+};
+
+export default Sort;
