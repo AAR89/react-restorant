@@ -1,13 +1,18 @@
 import React from "react";
 
-export const Sort = () => {
+export const Sort = ({ value, onChangeSort }) => {
   const [isVisible, setIsVisible] = React.useState(false);
-  const list = ["популярности", "цене", "алфавиту"];
-  const [selected, setSelected] = React.useState(0);
-  const sortName = list[selected];
+  const list = [
+    { name: "популярности (по убыв)", sortProperty: "rating" },
+    { name: "популярности (по возрастанию)", sortProperty: "-rating" },
+    { name: "цене (по убыв)", sortProperty: "price" },
+    { name: "цене (по возрастанию)", sortProperty: "-price" },
+    { name: "алфавиту (по убыв)", sortProperty: "title" },
+    { name: "алфавиту (по возрастанию)", sortProperty: "- title" },
+  ];
 
   const onClickListItem = (index) => {
-    setSelected(index);
+    onChangeSort(index);
     setIsVisible(!isVisible);
   };
 
@@ -27,18 +32,20 @@ export const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{sortName}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {list.map((name, index) => (
+            {list.map((obj, index) => (
               <li
                 key={index}
-                onClick={() => onClickListItem(index)}
-                className={selected === index ? "active" : ""}
+                onClick={() => onClickListItem(obj)}
+                className={
+                  value.sortProperty === obj.sortProperty ? "active" : ""
+                }
               >
-                {name}
+                {obj.name}
               </li>
             ))}
           </ul>

@@ -20,6 +20,16 @@
 
   &__logo {
     display: flex;
+    justify-content: space-between;
+    width: 80%;
+
+    @media (max-width: 950px) {
+      flex-direction: column;
+    }
+
+    @media (max-width: 645px) {
+      align-items: center;
+    }
 
     img {
       margin-right: 15px;
@@ -41,4 +51,9 @@
 
 .logo-block {
   display: flex;
+  align-items: center;
+
+  @media (max-width: 950px) {
+    margin-bottom: 20px;
+  }
 }
