@@ -1,18 +1,23 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-export const Sort = ({ value, onChangeSort }) => {
+const list = [
+  { name: "популярности (по убыв)", sortProperty: "rating" },
+  { name: "популярности (по возрастанию)", sortProperty: "-rating" },
+  { name: "цене (по убыв)", sortProperty: "price" },
+  { name: "цене (по возрастанию)", sortProperty: "-price" },
+  { name: "алфавиту (по убыв)", sortProperty: "title" },
+  { name: "алфавиту (по возрастанию)", sortProperty: "- title" },
+];
+export const Sort = () => {
   const [isVisible, setIsVisible] = React.useState(false);
-  const list = [
-    { name: "популярности (по убыв)", sortProperty: "rating" },
-    { name: "популярности (по возрастанию)", sortProperty: "-rating" },
-    { name: "цене (по убыв)", sortProperty: "price" },
-    { name: "цене (по возрастанию)", sortProperty: "-price" },
-    { name: "алфавиту (по убыв)", sortProperty: "title" },
-    { name: "алфавиту (по возрастанию)", sortProperty: "- title" },
-  ];
 
-  const onClickListItem = (index) => {
-    onChangeSort(index);
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
+
+  const onClickListItem = (obj) => {
+    dispatch(setSort(obj));
     setIsVisible(!isVisible);
   };
 
@@ -32,7 +37,7 @@ export const Sort = ({ value, onChangeSort }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{sort.name}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
@@ -42,7 +47,7 @@ export const Sort = ({ value, onChangeSort }) => {
                 key={index}
                 onClick={() => onClickListItem(obj)}
                 className={
-                  value.sortProperty === obj.sortProperty ? "active" : ""
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
                 }
               >
                 {obj.name}

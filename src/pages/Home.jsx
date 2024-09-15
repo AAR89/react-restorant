@@ -10,7 +10,8 @@ import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
 
 export const Home = () => {
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const { categoryId, sort } = useSelector((state) => state.filter);
+  const sortType = sort.sortProperty;
   const dispatch = useDispatch();
 
   const onChangeCategory = (id) => {
@@ -21,20 +22,15 @@ export const Home = () => {
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  // const [categoryId, setCategoryId] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
 
   React.useEffect(() => {
     setIsLoading(true);
 
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
-    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
-    const sortBy = sortType.sortProperty.replace("-", "");
+    const order = sortType.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.replace("-", "");
 
     fetch(
       `https://66d089fb181d059277def8f2.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
@@ -68,12 +64,7 @@ export const Home = () => {
               onChangeCategory(index);
             }}
           />
-          <Sort
-            value={sortType}
-            onChangeSort={(index) => {
-              setSortType(index);
-            }}
-          />
+          <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">{isLoading ? skeletons : pizzas}</div>
